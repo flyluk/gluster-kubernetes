@@ -49,6 +49,8 @@ OBJ_USER=""
 OBJ_PASSWORD=""
 OBJ_STORAGE_CLASS="glusterfs-for-s3"
 OBJ_CAPACITY="2Gi"
+STORAGE_CLASS_FILE="gluster-storageclass.yml"
+
 
 usage() {
   echo -e "USAGE: ${PROG} [-ghvy] [-c CLI] [-t <TEMPLATES>] [-n NAMESPACE] [-w <SECONDS>]
@@ -964,6 +966,13 @@ parameters:
   restuserkey: \"${USER_KEY}\""
   fi
   output ""
+  
+  output "Writing gluster-storageclass.yml to ${PWD}"
+  eval_output "sed -e 's/\\\${heketi_service}/${heketi_service}/' -e 's/\\\${USER}/${USER}/' -e 's/\\\${USER_KEY}/${USER_KEY}/' ${TEMPLATES}/${STORAGE_CLASS_FILE} > ${STORAGE_CLASS_FILE} 2>&1"
+  output "Write OK."
+  output "Createing Gluster Storage Class"
+  eval_output "${CLI} create -f ${STORAGE_CLASS_FILE}"  
+
 fi
 
 
