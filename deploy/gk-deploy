@@ -968,7 +968,7 @@ parameters:
   output ""
   
   output "Writing gluster-storageclass.yml to ${PWD}"
-  eval_output "sed -e 's/\\\${heketi_service}/${heketi_service}/' -e 's/\\\${USER}/${USER}/' -e 's/\\\${USER_KEY}/${USER_KEY}/' ${TEMPLATES}/${STORAGE_CLASS_FILE} > ${STORAGE_CLASS_FILE} 2>&1"
+  eval_output "sed -e 's/\\\${heketi_service}/http:\/\/${heketi_service}/' -e 's/\\\${USER}/admin/' -e 's/\\\${USER_KEY}/${ADMIN_KEY}/' ${TEMPLATES}/${STORAGE_CLASS_FILE} > ${STORAGE_CLASS_FILE} 2>&1"
   output "Write OK."
   output "Createing Gluster Storage Class"
   eval_output "${CLI} create -f ${STORAGE_CLASS_FILE}"  
